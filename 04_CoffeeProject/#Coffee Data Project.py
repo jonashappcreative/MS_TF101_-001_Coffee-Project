@@ -9,25 +9,21 @@ coffee_data = pd.read_excel(data)
 #As I user I want to know which chain has the most caffein (mg) per amount in ml
 
 #ic((type(coffee_data)))
-ic(coffee_data)
+#ic(coffee_data)
 
 #As I user I want to know which product has the most caffein per amount
 
-ic(coffee_data.columns) #Gives you Header Names of Rows as a List
-ic(coffee_data.shape) #Gives ou the number of columns and rows, Like length / len()
-
+#ic(coffee_data.columns) #Gives you Header Names of Rows as a List
+#ic(coffee_data.shape) #Gives ou the number of columns and rows, Like length / len()
 #ic(coffee_data.tail(3)) #Gives you the last {number} columns as an output  
 
 chain_list = (coffee_data['Chain'])
-#ic(chain_list)
 
 chain_list_unique = pd.unique(coffee_data['Chain']) #Filters the List of Chains to return only the names once, gives out array
-
-ic(chain_list_unique)
-
+#ic(chain_list_unique)
 
 drinks_list_unique = pd.unique(coffee_data['Product'])
-ic(drinks_list_unique)
+#ic(drinks_list_unique)
 
 def calc_caffeine_per_ammount(caffeine_mg, drink_size):
 
@@ -57,13 +53,28 @@ def execute_calculation_in_list(coffee_data): #imports old list
         
         Per100ml.append(caffein_per_ammount)
 
-    new_coffee_data = pd.DataFrame(coffee_data, columns = ['Chain', 'Caffeine (mg)', 'Drink size (ml)'])
     new_coffee_data["Caffeine per 100 ml"]= Per100ml
 
     return new_coffee_data
-
-
-    #Should execute calculation for every drink in list and return a new list with column Caffeine_Ammount
     
 new_coffee_data = execute_calculation_in_list(coffee_data)
 ic(new_coffee_data)
+
+def print_result(new_coffee_data):
+
+    #Sort Data by highest amount per 100 ml and output Brand, Product and caffeine per 100 ml.
+
+    new_coffee_data.loc[:, "Caffeine per 100 ml"]
+    #ic(new_coffee_data.loc[:, "Caffeine per 100 ml"])
+
+    index_highest_amount = new_coffee_data['Caffeine per 100 ml'].idxmax()
+
+    product = coffee_data.iloc[index_highest_amount, 1]
+    brand = coffee_data.iloc[index_highest_amount, 0]
+    amount = coffee_data.iloc[index_highest_amount, 4]
+
+    print("Question: As I user I want to know which product has the most caffein per amount. ")
+    print(f"The {product} by {brand} has the highest amount of caffein per 100 ml. It contains {amount} mg per 100 ml.")
+
+
+print_result(new_coffee_data)
