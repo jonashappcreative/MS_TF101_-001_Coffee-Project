@@ -92,12 +92,12 @@ def calculate_caffein_average(new_coffee_data):
     for x in range(0, len(chain_list_unique)):
             
             df1 = grouped.get_group(chain_list_unique[x])
-            ic(type(df1))
+            #ic(type(df1))
             length_group_count = len(grouped.get_group(chain_list_unique[x]))
-            ic(type(length_group_count))
+            #ic(type(length_group_count))
 
             caffein_sum = sum(df1['Caffeine per 100 ml'])
-            caffein_average = caffein_sum / length_group_count
+            caffein_average = round(caffein_sum / length_group_count, 2)
 
             results.append(caffein_average)
     
@@ -111,16 +111,19 @@ def calculate_caffein_average(new_coffee_data):
 def print_results_task2(new_coffee_data):
 
     results_task_two = calculate_caffein_average(new_coffee_data)
-    ic(results_task_two)
+    results_task_two = results_task_two.sort_values(by=['Average_Caffeine'], ascending=False)
+
+    #ic(results_task_two)
 
     print("*************************")
     print("********* Task 2 ********")
     print("*************************")
-    print("Question: As I user I want to know which chain has the most caffein (mg) per amount in ml. ")
-    print(f"The chain ..pass.. has the highest amount of caffein in their products. It is ..pass.. mg per serving on average.")
+    print("Question: As I user I want to know which chain has the most caffein (mg) per serving. ")
+    print(f"The chain {results_task_two.iloc[0, 0]} has the highest amount of caffein in their products. It is {results_task_two.iloc[0, 1]} mg per serving on average.")
     print("*************************")
     print("This is the full ranking:")
-    print(sorted(results_task_two))
+    print(results_task_two)
+    print("*************************")
 
 print_results_task2(new_coffee_data)
 
