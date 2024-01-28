@@ -6,13 +6,10 @@ from icecream import ic
 data = pd.ExcelFile("/Users/jonashapp/Documents/GitHub/MS_TF101_-001_Coffee-Project/04_CoffeeProject/Coffee Caffeine Content.xlsx")
 coffee_data = pd.read_excel(data)
 
-#As I user I want to know which chain has the most caffein (mg) per amount in ml
+#Task 1: As I user I want to know which product has the most caffein per amount
 
 #ic((type(coffee_data)))
 #ic(coffee_data)
-
-#As I user I want to know which product has the most caffein per amount
-
 #ic(coffee_data.columns) #Gives you Header Names of Rows as a List
 #ic(coffee_data.shape) #Gives ou the number of columns and rows, Like length / len()
 #ic(coffee_data.tail(3)) #Gives you the last {number} columns as an output  
@@ -58,12 +55,11 @@ def execute_calculation_in_list(coffee_data): #imports old list
     return new_coffee_data
     
 new_coffee_data = execute_calculation_in_list(coffee_data)
-ic(new_coffee_data)
+#ic(new_coffee_data)
 
-def print_result(new_coffee_data):
+def print_result_task1(new_coffee_data):
 
     #Sort Data by highest amount per 100 ml and output Brand, Product and caffeine per 100 ml.
-
     new_coffee_data.loc[:, "Caffeine per 100 ml"]
     #ic(new_coffee_data.loc[:, "Caffeine per 100 ml"])
 
@@ -73,8 +69,59 @@ def print_result(new_coffee_data):
     brand = coffee_data.iloc[index_highest_amount, 0]
     amount = coffee_data.iloc[index_highest_amount, 4]
 
+    print("*************************")
+    print("********* Task 1 ********")
+    print("*************************")
     print("Question: As I user I want to know which product has the most caffein per amount. ")
     print(f"The {product} by {brand} has the highest amount of caffein per 100 ml. It contains {amount} mg per 100 ml.")
+    print("*************************")
+
+#print_result_task1(new_coffee_data)
+
+#Task 2: As I user I want to know which chain has the most caffein (mg) per amount in ml
+
+def calculate_caffein_average(new_coffee_data):
+
+    # Split Dataframe using groupby() &
+    # Grouping by particular dataframe column
+
+    grouped = new_coffee_data.groupby(['Chain'])
+
+    results = []
+
+    for x in range(0, len(chain_list_unique)):
+            
+            df1 = grouped.get_group(chain_list_unique[x])
+            ic(type(df1))
+            length_group_count = len(grouped.get_group(chain_list_unique[x]))
+            ic(type(length_group_count))
+
+            caffein_sum = sum(df1['Caffeine per 100 ml'])
+            caffein_average = caffein_sum / length_group_count
+
+            results.append(caffein_average)
+    
+    #combine two lists to one with results
+    combine_lists_to_df = {'Chain': chain_list_unique, 'Average_Caffeine': results} 
+    final = pd.DataFrame(combine_lists_to_df)
+    #ic(final)
+
+    return final
+
+def print_results_task2(new_coffee_data):
+
+    results_task_two = calculate_caffein_average(new_coffee_data)
+    ic(results_task_two)
+
+    print("*************************")
+    print("********* Task 2 ********")
+    print("*************************")
+    print("Question: As I user I want to know which chain has the most caffein (mg) per amount in ml. ")
+    print(f"The chain ..pass.. has the highest amount of caffein in their products. It is ..pass.. mg per serving on average.")
+    print("*************************")
+    print("This is the full ranking:")
+    print(sorted(results_task_two))
+
+print_results_task2(new_coffee_data)
 
 
-print_result(new_coffee_data)
