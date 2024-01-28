@@ -3,13 +3,11 @@
 import pandas as pd
 from icecream import ic
 
-
-xlsx = pd.ExcelFile("/Users/jonashapp/Desktop/Arbeit/00_Masterschool/04_CoffeeProject/Coffee Caffeine Content.xlsx")
+xlsx = pd.ExcelFile("/Users/jonashapp/Documents/GitHub/MS_TF101_-001_Coffee-Project/04_CoffeeProject/Coffee Caffeine Content.xlsx")
+df = pd.read_excel(xlsx)
 
 #As I user I want to know which chain has the most caffein (mg) per amount in ml
 #As I user I want to know which product has the most caffein per amount
 
-print("Test hello!")
-ic
-
-print(xlsx)
+ic((type(df)))
+ic(df)
