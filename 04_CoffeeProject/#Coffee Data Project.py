@@ -41,22 +41,29 @@ def calc_caffeine_per_ammount(caffeine_mg, drink_size):
 def execute_calculation_in_list(coffee_data): #imports old list
 
     column_count = len(coffee_data['Chain'])  #Gets number of items in DataFramew without header
+    
+    Per100ml = []
+    new_coffee_data = coffee_data
 
     for x in range(0, column_count): #Starts at 1, not header
 
         caffeine_mg = coffee_data.iloc[x, 2]
         drink_size = coffee_data.iloc[x, 3]
         
-        ic(caffeine_mg)
-        ic(drink_size)
+        #ic(caffeine_mg)
+        #ic(drink_size)
 
         caffein_per_ammount = calc_caffeine_per_ammount(caffeine_mg, drink_size) #100 proxy
         
-        ic(caffein_per_ammount)
+        Per100ml.append(caffein_per_ammount)
+
+    new_coffee_data = pd.DataFrame(coffee_data, columns = ['Chain', 'Caffeine (mg)', 'Drink size (ml)'])
+    new_coffee_data["Caffeine per 100 ml"]= Per100ml
+
+    return new_coffee_data
+
 
     #Should execute calculation for every drink in list and return a new list with column Caffeine_Ammount
     
-    #return new_coffee_data         
-    #DataFrame Format
-
-execute_calculation_in_list(coffee_data)
+new_coffee_data = execute_calculation_in_list(coffee_data)
+ic(new_coffee_data)
