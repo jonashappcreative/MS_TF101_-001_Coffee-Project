@@ -113,7 +113,7 @@ def print_results_task2(new_coffee_data):
     results_task_two = calculate_caffein_average(new_coffee_data)
     results_task_two = results_task_two.sort_values(by=['Average_Caffeine'], ascending=False)
 
-    #ic(results_task_two)
+    ic(results_task_two)
 
     print("*************************")
     print("********* Task 2 ********")
